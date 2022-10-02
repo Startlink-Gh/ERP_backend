@@ -3,17 +3,11 @@ dotenv.config();
 const express = require('express');
 const app = express();
 
-const database = require('./database');
+const auth = require('./routes/auth');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api/v1/auth', auth);
 
-app.get('/', (req, res) => {
-  res.send('Welcome to our homepage.');
-});
-
-app.get('/about', (req, res) => {
-  res.send('Thanks for learning more about us');
-});
-
-app.listen(process.env.PORT);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
