@@ -27,3 +27,39 @@ exports.verifyToken = (req, res, next) => {
     next();
   });
 };
+
+exports.validateRegister = (req, res, next) => {
+  // username min length 3
+  if (!req.body.username || req.body.username.length < 3) {
+    return res.status(400).json({
+      success: false,
+      error: 'Please enter a username with min. 3 chars',
+    });
+  }
+  //validate email
+  let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  if (!req.body.username || !reg.test(req.body.email)) {
+    return res.status(400).json({
+      success: false,
+      error: 'Please enter a valid email address',
+    });
+  }
+  // password min 6 chars
+  if (!req.body.password || req.body.password.length < 6) {
+    return res.status(400).json({
+      success: false,
+      error: 'Please enter a password with min. 6 chars',
+    });
+  }
+  // password (repeat) does not match
+  if (
+    !req.body.confirmPassword ||
+    req.body.password !== req.body.confirmPassword
+  ) {
+    return res.status(400).json({
+      success: false,
+      error: 'Both passwords must match',
+    });
+  }
+  next();
+};
