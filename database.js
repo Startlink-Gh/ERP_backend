@@ -25,6 +25,25 @@ class database {
         return instance ? instance : new database();
     }
 
+    //get all the categories
+    async getCategories() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM product_category;";
+
+                connection.query(query, (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+            return response;
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //add new category
     async insertNewCategory(category, description) {
         try {
             const insertId = await new Promise((resolve, reject) => {
@@ -48,6 +67,27 @@ class database {
         catch (error) {
             console.log(error);
         }
+    }
+
+    //delete category by id
+    async deleteCategory(id) {
+        try {
+            id = parseInt(id, 10);
+
+            const response = await new Promise((resolve, reject) => {
+
+                const query = "DELETE FROM product_category WHERE category_id = ?;";
+
+                connection.query(query, [id], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 }
 
