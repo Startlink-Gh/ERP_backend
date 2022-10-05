@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const { response } = require('express');
 dotenv.config();
 const mysql = require('mysql');
 let instance = null;
@@ -22,6 +23,22 @@ class supplier {
     static getDatabaseInstance() {
         return instance ? instance : new supplier();
     }
+    async getSuppliers() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM supplier;";
+
+                connection.query(query, (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+            return response;
+        }
+        catch (error) {
+
+        }
+    }
 
     async addNewSupplier(name, email, phone, address, city, region, suburb, countryid) {
         try {
@@ -36,7 +53,7 @@ class supplier {
                     resolve(result.insertId);
                 })
             });
-            console.log("supplier added successfully!");
+            return;
         }
         catch (error) {
             console.log(error);

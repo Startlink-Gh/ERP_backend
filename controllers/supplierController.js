@@ -16,3 +16,18 @@ exports.addSuppliers = (req, res) => {
         console.log(error);
     }
 }
+
+exports.getSuppliers = (req, res) => {
+    try {
+        const db = database.getDatabaseInstance();
+
+        const result = db.getSuppliers();
+
+        result
+            .then(data => res.json({ data: data }))
+            .catch(err => console.log(err));
+
+    } catch (error) {
+        console.log(error);
+    }
+}

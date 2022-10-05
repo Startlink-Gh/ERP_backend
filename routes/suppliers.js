@@ -4,19 +4,13 @@ const routes = express.Router();
 
 const {
     addSuppliers,
-    getSupplier,
+    getSuppliers,
 } = require('../controllers/supplierController');
 
-// routes.get('/getCategories', getCategories);
+//get all suppliers
+routes.get('/getSuppliers', getSuppliers);
 
+//add new suppliers
 routes.post('/add', addSuppliers);
-
-// routes.delete('/delete/:id', deleteCategory);
-
-routes.get('/', (req, res) => {
-    res.send("welcome to suppliers!");
-});
-
-
 
 module.exports = routes;
