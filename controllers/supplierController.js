@@ -1,0 +1,51 @@
+const database = require('../database');
+
+exports.addSuppliers = (req, res) => {
+    try {
+        const { name, email, phone, address, city, region, suburb, countryid } = req.body;
+
+        const db = database.getDatabaseInstance();
+
+        const result = db.addNewSupplier(name, email, phone, address, city, region, suburb, countryid);
+
+        result
+            .then(data => res.json({ data: data }))
+            .catch(err => console.log(err));
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.getSuppliers = (req, res) => {
+    try {
+        const db = database.getDatabaseInstance();
+
+        const result = db.getSuppliers();
+
+        result
+            .then(data => res.json({ data: data }))
+            .catch(err => console.log(err));
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//we only need to update email and phone for now
+exports.updateSupplierDetails = (req, res) => {
+    try {
+        const { supplier_id, email, phone } = req.body;
+
+        const db = database.getDatabaseInstance();
+
+        const result = db.updateSupplierDetails(supplier_id, email, phone);
+
+        result
+            .then(data => res.json({ data: data }))
+            .catch(err => console.log(err));
+
+    } catch (error) {
+        console.log(error);
+    }
+}
