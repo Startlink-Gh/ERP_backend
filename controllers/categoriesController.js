@@ -15,10 +15,20 @@ exports.addCategory = (req, res) => {
     const result = db.insertNewCategory(category, description);
 
     result
-      .then((data) => res.json({ data: data }))
-      .catch((err) => console.log(err));
+      .then((data) =>
+        res.status(201).json({
+          success: true,
+          data,
+        })
+      )
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          error: err,
+        })
+      );
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -27,9 +37,19 @@ exports.deleteCategory = (req, res) => {
     const { id } = req.params;
     const result = db.deleteCategory(id);
     result
-      .then((data) => res.json({ success: true }))
-      .catch((err) => console.log(err));
+      .then((data) =>
+        res.status(201).json({
+          success: true,
+          data,
+        })
+      )
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          error: err,
+        })
+      );
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };

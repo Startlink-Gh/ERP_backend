@@ -29,10 +29,20 @@ exports.getSuppliers = (req, res) => {
     const result = db.getSuppliers();
 
     result
-      .then((data) => res.json({ data: data }))
-      .catch((err) => console.log(err));
+      .then((data) =>
+        res.status(201).json({
+          success: true,
+          data,
+        })
+      )
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          error: err,
+        })
+      );
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -44,9 +54,19 @@ exports.updateSupplierDetails = (req, res) => {
     const result = db.updateSupplierDetails(supplier_id, email, phone);
 
     result
-      .then((data) => res.json({ data: data }))
-      .catch((err) => console.log(err));
+      .then((data) =>
+        res.status(201).json({
+          success: true,
+          data,
+        })
+      )
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          error: err,
+        })
+      );
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
