@@ -15,3 +15,5 @@ connection.connect((err) => {
   }
   console.log('database ' + connection.state);
 });
+
+module.exports = connection;
