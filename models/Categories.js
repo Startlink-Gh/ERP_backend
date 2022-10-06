@@ -1,9 +1,7 @@
 const connection = require('../database');
-let instance = null;
-
 class Categories {
   static getCategoriesInstance() {
-    return instance ? instance : new Categories();
+    return new Categories();
   }
 
   //get all the categories

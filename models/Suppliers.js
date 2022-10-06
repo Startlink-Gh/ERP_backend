@@ -1,8 +1,8 @@
 const connection = require('../database');
-let instance = null;
+
 class Supplier {
   static getSupplierInstance() {
-    return instance ? instance : new Supplier();
+    return new Supplier();
   }
   async getSuppliers() {
     try {
