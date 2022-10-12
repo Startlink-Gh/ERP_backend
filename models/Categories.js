@@ -37,7 +37,7 @@ class Categories {
       console.log('added successfully');
 
       return {
-        id: insertId,
+        id: insertId.insertId,
         category: category,
         description: description,
       };
