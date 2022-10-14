@@ -1,5 +1,6 @@
 const Supplier = require('../models/Suppliers');
 const db = Supplier.getSupplierInstance();
+
 exports.addSuppliers = (req, res) => {
   try {
     const { name, email, phone, address, city, region, suburb, countryid } =
@@ -20,7 +21,7 @@ exports.addSuppliers = (req, res) => {
       .then((data) => res.json({ data: data }))
       .catch((err) => console.log(err));
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
 

@@ -9,6 +9,7 @@ const categories = require('./routes/categories');
 const suppliers = require('./routes/suppliers');
 const products = require('./routes/products');
 
+const purchase = require('./routes/purchase');
 //initialize express middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,6 +19,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/categories', categories);
 app.use('/api/v1/suppliers', suppliers);
 app.use('/api/v1/products', products);
+app.use('/api/v1/purchase', purchase);
 
 const PORT = process.env.PORT || 3000;
 
