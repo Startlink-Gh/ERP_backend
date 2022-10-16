@@ -24,9 +24,8 @@ class Categories {
   //add new category
   async insertNewCategory(category, description) {
     try {
-      const insertId = await new Promise((resolve, reject) => {
-        const query =
-          'INSERT INTO product_category (category, description) VALUES (?,?);';
+      const response = await new Promise((resolve, reject) => {
+        const query = 'INSERT INTO product_category (category, description) VALUES (?,?);';
 
         connection.query(query, [category, description], (err, results) => {
           if (err) reject(new Error(err.message));
@@ -37,7 +36,7 @@ class Categories {
       console.log('added successfully');
 
       return {
-        id: insertId,
+        id: response.insertId,
         category: category,
         description: description,
       };

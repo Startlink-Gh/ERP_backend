@@ -15,19 +15,12 @@ class Supplier {
         });
       });
       return response;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async addNewSupplier(
-    name,
-    email,
-    phone,
-    address,
-    city,
-    region,
-    suburb,
-    countryid
-  ) {
+  async addNewSupplier(name, email, phone, address, city, region, suburb, countryid) {
     try {
       const id = parseInt(countryid, 10);
 
@@ -35,14 +28,10 @@ class Supplier {
         const query =
           'INSERT INTO supplier (supplier_name, supplier_email, supplier_phone, address_line, city, region, suburb, country_id) VALUES (?,?,?,?,?,?,?,?);';
 
-        connection.query(
-          query,
-          [name, email, phone, address, city, region, suburb, id],
-          (err, result) => {
-            if (err) reject(new Error(err.message));
-            resolve(result.insertId);
-          }
-        );
+        connection.query(query, [name, email, phone, address, city, region, suburb, id], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.insertId);
+        });
       });
       return;
     } catch (error) {
@@ -55,8 +44,7 @@ class Supplier {
       const id = parseInt(supplier_id, 10);
 
       const response = await new Promise((resolve, reject) => {
-        const query =
-          'UPDATE supplier SET supplier_email = ?, supplier_phone = ? WHERE supplier_id = ?;';
+        const query = 'UPDATE supplier SET supplier_email = ?, supplier_phone = ? WHERE supplier_id = ?;';
 
         connection.query(query, [email, phone, id], (err, result) => {
           if (err) reject(new Error(err.message));
