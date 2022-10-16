@@ -1,25 +1,15 @@
-const Supplier = require('../models/Suppliers');
+const Supplier = require('../models/Supplier');
 const db = Supplier.getSupplierInstance();
 
 exports.addSuppliers = (req, res) => {
   try {
-    const { name, email, phone, address, city, region, suburb, countryid } =
-      req.body;
+    const { name, email, phone, address, city, region, suburb, countryid } = req.body;
 
-    const result = db.addNewSupplier(
-      name,
-      email,
-      phone,
-      address,
-      city,
-      region,
-      suburb,
-      countryid
-    );
+    const result = db.addNewSupplier(name, email, phone, address, city, region, suburb, countryid);
 
     result
-      .then((data) => res.json({ data: data }))
-      .catch((err) => console.log(err));
+      .then((data) => res.status(201).json({ success: true, data: data }))
+      .catch((err) => res.status(500).json({ success: false, error: err }));
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }
