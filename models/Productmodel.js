@@ -6,6 +6,29 @@ class Products {
         return new Products();
     }
 
+    async getSingleProduct(product_id) {
+        try {
+            console.log(product_id);
+
+            const id = parseInt(product_id, 10);
+
+            console.log(id);
+
+            const response = await new Promise((resolve, reject) => {
+                const query = 'SELECT * FROM product WHERE product_id =?;';
+
+                connection.query(query, [id], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            return response;
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getProducts() {
         try {
             const response = await new Promise((resolve, reject) => {
@@ -17,7 +40,9 @@ class Products {
                 });
             });
             return response;
-        } catch (error) { }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async addNewProduct(category_id, name, description) {

@@ -23,6 +23,33 @@ exports.getProducts = (req, res) => {
     }
 };
 
+exports.getProductDetails = (req, res) => {
+    try {
+        const { id } = req.body;
+
+        console.log(id);
+
+        const result = db.getSingleProduct(id);
+
+        result
+            .then((data) =>
+                res.status(201).json({
+                    success: true,
+                    data,
+                })
+            )
+            .catch((err) =>
+                res.status(500).json({
+                    success: false,
+                    error: err,
+                })
+            );
+
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+}
+
 exports.addNewProduct = (req, res) => {
     try {
         const { category_id, name, description } = req.body;
