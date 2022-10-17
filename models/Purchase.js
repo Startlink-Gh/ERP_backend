@@ -87,6 +87,24 @@ class Purchase {
         }
     }
 
+    async getPurchaseInvoiceDetails(id) {
+        try {
+            id = parseInt(id, 10);
+
+            const response = await new Promise((resolve, reject) => {
+                const query = 'SELECT * FROM `purchase_line` AS PL JOIN purchase AS P ON PL.purchase_id = P.id WHERE P.id = ?;';
+
+                connection.query(query, [id], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
 
 module.exports = Purchase;

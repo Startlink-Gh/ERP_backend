@@ -5,10 +5,6 @@ exports.addPurchase = (req, res) => {
     try {
         const { doc_no, supplier_id, expected_date, arrived_date, purchase_line } = req.body;
 
-        purchase_line.map((item) => {
-            console.log(item.product_id);
-        })
-
         const result = db.makeNewPurchase(doc_no, supplier_id, expected_date, arrived_date);
 
         // console.log(result);
@@ -38,3 +34,26 @@ exports.addPurchase = (req, res) => {
     }
 }
 
+exports.getPurchaseInvoicesDetails = (req, res) => {
+    try {
+        const { id } = req.body;
+
+        const result = db.getPurchaseInvoiceDetails(id);
+        result
+            .then((data) =>
+                res.status(201).json({
+                    success: true,
+                    data,
+                })
+            )
+            .catch((err) =>
+                res.status(500).json({
+                    success: false,
+                    error: err,
+                })
+            );
+
+    } catch (error) {
+        console.log(error);
+    }
+}
