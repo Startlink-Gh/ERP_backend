@@ -1,8 +1,11 @@
 require('dotenv').config();
 const express = require('express');
-
+const cors = require('cors');
 //initialize express
 const app = express();
+
+//enable cors for all routes
+app.use(cors());
 
 const auth = require('./routes/auth');
 const categories = require('./routes/categories');
@@ -11,6 +14,7 @@ const products = require('./routes/products');
 
 const purchase = require('./routes/purchase');
 //initialize express middlewares
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
