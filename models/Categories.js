@@ -8,9 +8,9 @@ class Categories {
   async getCategories() {
     try {
       const response = await new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM product_category;';
+        const query = 'SELECT * FROM product_category WHERE deleted=?;';
 
-        connection.query(query, (err, results) => {
+        connection.query(query, [0], (err, results) => {
           if (err) reject(new Error(err.message));
           resolve(results);
         });
@@ -22,12 +22,12 @@ class Categories {
   }
 
   //add new category
-  async insertNewCategory(category, description) {
+  async insertNewCategory(category_name, description) {
     try {
       const response = await new Promise((resolve, reject) => {
-        const query = 'INSERT INTO product_category (category, description) VALUES (?,?);';
+        const query = 'INSERT INTO product_category (category_name, description) VALUES (?,?);';
 
-        connection.query(query, [category, description], (err, results) => {
+        connection.query(query, [category_name, description], (err, results) => {
           if (err) reject(new Error(err.message));
           resolve(results);
         });
@@ -37,7 +37,7 @@ class Categories {
 
       return {
         id: response.insertId,
-        category: category,
+        category: category_name,
         description: description,
       };
     } catch (error) {
@@ -51,13 +51,13 @@ class Categories {
       id = parseInt(id, 10);
 
       const response = await new Promise((resolve, reject) => {
-        const query = 'DELETE FROM product_category WHERE category_id = ?;';
-
+        const query = 'UPDATE product_category SET deleted = true WHERE category_id = ?;';
         connection.query(query, [id], (err, results) => {
           if (err) reject(new Error(err.message));
           resolve(results);
         });
       });
+
       console.log(response);
     } catch (error) {
       console.log(error);
