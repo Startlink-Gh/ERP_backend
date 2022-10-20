@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Sep 22, 2022 at 02:39 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.3.28
+-- Host: 127.0.0.1
+-- Generation Time: Oct 20, 2022 at 02:48 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -54,10 +55,32 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `product` (
-  `producy_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `producy_name` varchar(100) NOT NULL
+  `product_name` varchar(100) NOT NULL,
+  `description` varchar(25) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `category_id`, `product_name`, `description`, `deleted`) VALUES
+(1, 2, 'Tested from backend', 'scdew thebui 7egie uheieo', 1),
+(2, 2, 'the boy', 'sdfghjikjn fdhd', 1),
+(3, 1, 'the boy', 'hiabdsjba ajbdoaoida adih', 1),
+(4, 2, 'the boy', 'ascadcfafcav ae faqev aef', 1),
+(5, 1, 'the boy', 'scas sdevasdv sdevfae', 1),
+(6, 2, 'the boy', 'scasc sdvebeatnb rfynetn', 1),
+(7, 3, 'the boy', 'asxa sdcadv adecfqaesv ae', 1),
+(8, 1, 'sasas', 'asa adca adcad adcad ', 1),
+(9, 2, 'the boy', 'sdscvs sfsf sfsfs', 1),
+(10, 1, 'the boy', 'sxasxcas  acasc  ascascva', 1),
+(11, 3, 'lAST oNE ', 'AEFWSRB BSRGWRBSF ND STBH', 1),
+(12, 2, 'the boy', 'sxa vascasc a', 1),
+(13, 3, 'ascascasc', 'asxasc', 0),
+(14, 6, 'the boy', 'asas', 0);
 
 -- --------------------------------------------------------
 
@@ -67,9 +90,22 @@ CREATE TABLE `product` (
 
 CREATE TABLE `product_category` (
   `category_id` int(11) NOT NULL,
-  `category` varchar(50) NOT NULL,
-  `description` text DEFAULT NULL
+  `category_name` varchar(50) NOT NULL,
+  `description` text,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`category_id`, `category_name`, `description`, `deleted`) VALUES
+(1, 'tested', 'did it work?', 0),
+(2, 'sadcasdc', 'asa adecfae', 0),
+(3, 'tyedss', 'dadafad', 0),
+(4, 'asaca', 'casv asdcaedsv  ', 0),
+(5, 'tested from backen ', 'fetch after added', 0),
+(6, 'Newly Fresh', 'amazing', 0);
 
 -- --------------------------------------------------------
 
@@ -84,7 +120,7 @@ CREATE TABLE `project` (
   `city` varchar(50) NOT NULL,
   `region` varchar(50) NOT NULL,
   `suburb` varchar(100) DEFAULT NULL,
-  `building_plan` blob DEFAULT NULL
+  `building_plan` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -103,6 +139,21 @@ CREATE TABLE `supplier` (
   `region` varchar(50) NOT NULL,
   `suburb` varchar(100) DEFAULT NULL,
   `country_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `username` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `registered` datetime NOT NULL,
+  `last_login` datetime NOT NULL,
+  `password` varchar(255) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -125,7 +176,7 @@ ALTER TABLE `customer`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`producy_id`);
+  ADD PRIMARY KEY (`product_id`);
 
 --
 -- Indexes for table `product_category`
@@ -144,6 +195,12 @@ ALTER TABLE `project`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`supplier_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -165,13 +222,13 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `producy_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `project`
