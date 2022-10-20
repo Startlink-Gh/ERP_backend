@@ -15,8 +15,8 @@ exports.getCategories = (req, res) => {
 
 exports.addCategory = (req, res) => {
   try {
-    const { category, description } = req.body;
-    const result = db.insertNewCategory(category, description);
+    const { category_name, description } = req.body;
+    const result = db.insertNewCategory(category_name, description);
 
     result
       .then((data) => res.status(201).json({ success: true, data }))
