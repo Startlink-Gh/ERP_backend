@@ -13,14 +13,10 @@ class Purchase {
         const query = `INSERT INTO purchase (document_no, supplier_id, expected_date,
                      arrived_date) VALUES (?,?,?,?);`;
 
-        connection.query(
-          query,
-          [doc_no, id, expected_date, arrived_date],
-          (err, result) => {
-            if (err) reject(new Error(err.message));
-            resolve(result.insertId);
-          }
-        );
+        connection.query(query, [doc_no, id, expected_date, arrived_date], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.insertId);
+        });
       });
       console.log(response);
       return response;
@@ -38,12 +34,7 @@ class Purchase {
 
           connection.query(
             query,
-            [
-              id,
-              purchase_line[i].product_id,
-              purchase_line[i].quantity,
-              purchase_line[i].unit_price,
-            ],
+            [id, purchase_line[i].product_id, purchase_line[i].quantity, purchase_line[i].unit_price],
             (err, result) => {
               if (err) reject(new Error(err.message));
               resolve(result);
@@ -52,8 +43,25 @@ class Purchase {
         });
 
         console.log('invoice added successfully!');
-        return response;
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getPurchaseInvoiceDetails(id) {
+    try {
+      id = parseInt(id, 10);
+
+      const response = await new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM `purchase_line` AS PL JOIN purchase AS P ON PL.purchase_id = P.id WHERE P.id = ?;';
+
+        connection.query(query, [id], (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+      return response;
     } catch (error) {
       console.log(error);
     }
