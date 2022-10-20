@@ -15,6 +15,22 @@ class Supplier {
         });
       });
       return response;
+    } catch (error) {}
+  }
+
+  async getSupplierDetails(id) {
+    try {
+      id = parseInt(id, 10);
+
+      const response = await new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM supplier WHERE supplier_id = ?;';
+
+        connection.query(query, [id], (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+      return response;
     } catch (error) {
       console.log(error);
     }
