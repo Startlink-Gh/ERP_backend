@@ -1,24 +1,22 @@
 const express = require('express');
 const routes = express.Router();
 
-
 const {
-    addSuppliers,
-    getSuppliers,
-    getSupplierDetails,
-    updateSupplierDetails,
+  addSupplier,
+  getSuppliers,
+  getSupplierDetails,
+  updateSupplierDetails,
+  deleteSupplier,
 } = require('../controllers/supplierController');
 
-//get all suppliers
 routes.get('/getSuppliers', getSuppliers);
 
-//get individual supplier details
 routes.get('/getSupplierDetails', getSupplierDetails);
 
-//add new suppliers
-routes.post('/add', addSuppliers);
+routes.post('/addSupplier', addSupplier);
 
-//update supplier's details
-routes.patch('/update', updateSupplierDetails);
+routes.patch('/updateSupplier', updateSupplierDetails);
+
+routes.delete('/delete/:id', deleteSupplier);
 
 module.exports = routes;

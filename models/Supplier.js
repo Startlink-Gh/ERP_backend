@@ -7,9 +7,9 @@ class Supplier {
   async getSuppliers() {
     try {
       const response = await new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM supplier;';
+        const query = 'SELECT * FROM supplier WHERE deleted=?;';
 
-        connection.query(query, (err, results) => {
+        connection.query(query, [0], (err, results) => {
           if (err) reject(new Error(err.message));
           resolve(results);
         });
@@ -36,20 +36,23 @@ class Supplier {
     }
   }
 
-  async addNewSupplier(name, email, phone, address, city, region, suburb, countryid) {
+  async addNewSupplier(name, email, phone, address, city, region, suburb, country) {
     try {
-      const id = parseInt(countryid, 10);
-
-      const insertId = await new Promise((resolve, reject) => {
+      const response = await new Promise((resolve, reject) => {
         const query =
-          'INSERT INTO supplier (supplier_name, supplier_email, supplier_phone, address_line, city, region, suburb, country_id) VALUES (?,?,?,?,?,?,?,?);';
+          'INSERT INTO supplier (supplier_name, supplier_email, supplier_phone, address_line, city, region, suburb, country) VALUES (?,?,?,?,?,?,?,?);';
 
-        connection.query(query, [name, email, phone, address, city, region, suburb, id], (err, result) => {
+        connection.query(query, [name, email, phone, address, city, region, suburb, country], (err, result) => {
           if (err) reject(new Error(err.message));
-          resolve(result.insertId);
+          resolve(result);
         });
       });
-      return;
+
+      if (response.affectedRows)
+        return {
+          id: response.insertId,
+          supplier_name: name,
+        };
     } catch (error) {
       console.log(error);
     }
@@ -64,10 +67,27 @@ class Supplier {
 
         connection.query(query, [email, phone, id], (err, result) => {
           if (err) reject(new Error(err.message));
-          resolve(result.affectedRows);
+          resolve(result);
         });
       });
-      return console.log(response + 'updated successfully!');
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteSupplier(supplier_id) {
+    try {
+      supplier_id = parseInt(supplier_id, 10);
+      const response = await new Promise((resolve, reject) => {
+        const query = 'UPDATE supplier SET deleted = true WHERE supplier_id = ?;';
+        connection.query(query, [supplier_id], (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+
+      return response;
     } catch (error) {
       console.log(error);
     }
