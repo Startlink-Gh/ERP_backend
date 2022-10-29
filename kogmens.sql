@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2022 at 02:48 AM
+-- Generation Time: Oct 29, 2022 at 03:30 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -104,8 +104,8 @@ INSERT INTO `product_category` (`category_id`, `category_name`, `description`, `
 (2, 'sadcasdc', 'asa adecfae', 0),
 (3, 'tyedss', 'dadafad', 0),
 (4, 'asaca', 'casv asdcaedsv  ', 0),
-(5, 'tested from backen ', 'fetch after added', 0),
-(6, 'Newly Fresh', 'amazing', 0);
+(5, 'tested from backen ', 'fetch after added', 1),
+(6, 'Newly Fresh', 'amazing', 1);
 
 -- --------------------------------------------------------
 
@@ -138,8 +138,20 @@ CREATE TABLE `supplier` (
   `city` varchar(50) NOT NULL,
   `region` varchar(50) NOT NULL,
   `suburb` varchar(100) DEFAULT NULL,
-  `country_id` int(11) NOT NULL
+  `country` varchar(11) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_email`, `supplier_phone`, `address_line`, `city`, `region`, `suburb`, `country`, `deleted`) VALUES
+(1, 'dcvadvadv', 'startlinkgh@gmail.com', 'advadvadvad', 'vadvadvad', 'vadvadvadv', 'advsdvsfvsdv', 'sdvsadvadv', 'adv advadva', 0),
+(2, 'tteteetetet', 'Janitafdaa@claimab.com', 'etetetetet', 'etethaetbhethethet', 'thethbEHBetb neatbh', 'hERHehEH', 'hbetbhet', 'ethethbet', 0),
+(3, 'tesed', 'Janitafdaa@claimab.com', 'sfvsdfvsdbs', 'sbsfb sfSB  dgbFb', 'Fb FbFb', 'fb FbdFb', 'dfbdfb', 'dfbdfbdfb', 0),
+(4, 'asdcesadvsd', 'vsadvsadv', 'avava', 'avsdvsdvsdvd', 'vadvadvadvad', 'avadvav', 'avasdvadvsdvsd', 'vsdvsdvsdvs', 1),
+(5, 'MEJCSKLND', 'startlinkgh@gmail.com', 'dfgbdfbdfbdfbdfbb', 'dfbdfbdfbd', 'fbdfbdfb', 'dfbdfbdfbd', 'dfbdgbdfb ', 'dfbdfbdfb', 1);
 
 -- --------------------------------------------------------
 
@@ -240,7 +252,7 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
