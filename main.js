@@ -16,7 +16,7 @@ const purchase = require('./routes/purchase');
 //initialize express middlewares
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 //Define Routes
 app.use('/api/v1/auth', auth);
